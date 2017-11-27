@@ -35,8 +35,6 @@
  <Project>
   <ProjectSessionItem path="clean_slate" name="unnamed" />
   <ProjectSessionItem path="clean_slate;clean_slate" name="unnamed" />
-  <ProjectSessionItem path="clean_slate;clean_slate;Salvo Configuration File" name="unnamed" />
-  <ProjectSessionItem path="clean_slate;clean_slate;Salvo Source Files" name="unnamed" />
   <ProjectSessionItem path="clean_slate;clean_slate;Source Files" name="unnamed" />
  </Project>
  <Register1>
@@ -74,7 +72,9 @@
  <Watch4>
   <Watches active="0" update="Never" />
  </Watch4>
- <Files/>
+ <Files>
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="main.c" y="0" path="main.c" left="0" selected="0" name="unnamed" top="0" />
+ </Files>
  <MSP430CrossStudioWindow activeProject="clean_slate" autoConnectTarget="MSP430 Core Simulator" debugSearchFileMap="c:/pumpkin/salvo/src/salvoinit.c
-C:/Users/John/Documents/School/Capstone/VCSC_UVA_software/flight_software/Pumpkin/Salvo/Src/salvoinit.c" fileDialogInitialDirectory="/Users/John/Pumpkin/Salvo/Lib/RA430-v2" fileDialogDefaultFilter="*.hza" autoConnectCapabilities="703" debugSearchPath="" buildConfiguration="MSP430 Debug" />
+C:/Users/John/Documents/School/Capstone/VCSC_UVA_software/flight_software/Pumpkin/Salvo/Src/salvoinit.c" fileDialogInitialDirectory="/Users/John/Documents/School/f17/Capstone/plant-squad-capstone/main_software" fileDialogDefaultFilter="*.c" autoConnectCapabilities="703" debugSearchPath="" buildConfiguration="MSP430 Debug" />
 </session>
