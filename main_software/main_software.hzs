@@ -33,9 +33,10 @@
   <MemoryWindow autoEvaluate="0" addressText="" addressOrder="0" refreshPeriod="0" columnsText="" sizeText="" viewMode="0" dataSize="1" radix="16" name="clean_slate" addressSpace="" />
  </Memory4>
  <Project>
-  <ProjectSessionItem path="clean_slate" name="unnamed" />
-  <ProjectSessionItem path="clean_slate;clean_slate" name="unnamed" />
-  <ProjectSessionItem path="clean_slate;clean_slate;Source Files" name="unnamed" />
+  <ProjectSessionItem path="main_software" name="unnamed" />
+  <ProjectSessionItem path="main_software;main_software" name="unnamed" />
+  <ProjectSessionItem path="main_software;main_software;Project Include" name="unnamed" />
+  <ProjectSessionItem path="main_software;main_software;Source Files" name="unnamed" />
  </Project>
  <Register1>
   <RegisterWindow openNodes="" binaryNodes="" unsignedNodes="" decimalNodes="" octalNodes="" asciiNodes="" visibleNodes="" name="flight_software" />
@@ -73,8 +74,16 @@
   <Watches active="0" update="Never" />
  </Watch4>
  <Files>
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="main.c" y="0" path="main.c" left="0" selected="0" name="unnamed" top="0" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="main.c" y="10" path="main.c" left="0" selected="0" name="unnamed" top="0" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="inc/tasks.h" y="5" path="inc/tasks.h" left="0" selected="0" name="unnamed" top="0" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="tasks.c" y="68" path="tasks.c" left="0" selected="0" name="unnamed" top="54" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="inc/data.h" y="47" path="inc/data.h" left="0" selected="0" name="unnamed" top="42" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="data.c" y="5" path="data.c" left="0" selected="0" name="unnamed" top="0" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="inc/clock.h" y="27" path="inc/clock.h" left="0" selected="0" name="unnamed" top="11" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="inc/i2c_driver.h" y="0" path="inc/i2c_driver.h" left="0" selected="0" name="unnamed" top="117" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="inc/i2c_peripherals.h" y="23" path="inc/i2c_peripherals.h" left="0" selected="0" name="unnamed" top="9" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="clock.c" y="24" path="clock.c" left="0" selected="0" name="unnamed" top="0" />
  </Files>
- <MSP430CrossStudioWindow activeProject="clean_slate" autoConnectTarget="MSP430 Core Simulator" debugSearchFileMap="c:/pumpkin/salvo/src/salvoinit.c
-C:/Users/John/Documents/School/Capstone/VCSC_UVA_software/flight_software/Pumpkin/Salvo/Src/salvoinit.c" fileDialogInitialDirectory="/Users/John/Documents/School/f17/Capstone/plant-squad-capstone/main_software" fileDialogDefaultFilter="*.c" autoConnectCapabilities="703" debugSearchPath="" buildConfiguration="MSP430 Debug" />
+ <MSP430CrossStudioWindow activeProject="main_software" autoConnectTarget="MSP430 Core Simulator" debugSearchFileMap="c:/pumpkin/salvo/src/salvoinit.c
+C:/Users/John/Documents/School/Capstone/VCSC_UVA_software/flight_software/Pumpkin/Salvo/Src/salvoinit.c" fileDialogInitialDirectory="/Users/John/Documents/School/f17/Capstone/plant-squad-capstone/main_software/inc" fileDialogDefaultFilter="*.h" autoConnectCapabilities="703" debugSearchPath="" buildConfiguration="MSP430 Debug" />
 </session>

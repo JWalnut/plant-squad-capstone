@@ -1,6 +1,6 @@
 <!DOCTYPE CrossStudio_Project_File>
-<solution Name="clean_slate" target="9" version="2">
-  <project Name="clean_slate">
+<solution Name="main_software" target="9" version="2">
+  <project Name="main_software">
     <configuration
       Name="Common"
       Platform="MSP430"
@@ -22,6 +22,10 @@
     <folder Name="Source Files">
       <configuration Name="Common" filter="c;h;s;asm;inc;s43" />
       <file file_name="main.c" />
+      <file file_name="tasks.c" />
+      <file file_name="data.c" />
+      <file file_name="clock.c" />
+      <file file_name="i2c_driver.c" />
     </folder>
     <folder Name="System Files">
       <configuration Name="Common" filter="xml" />
@@ -38,6 +42,13 @@
       <file file_name="Pumpkin/Salvo/Lib/RA430-v2/libsalvolra430xit.hza" />
     </folder>
     <folder Name="Listings" />
+    <folder Name="Project Include">
+      <file file_name="inc/tasks.h" />
+      <file file_name="inc/data.h" />
+      <file file_name="inc/clock.h" />
+      <file file_name="inc/i2c_driver.h" />
+      <file file_name="inc/i2c_peripherals.h" />
+    </folder>
   </project>
   <configuration
     Name="MSP430 Debug"

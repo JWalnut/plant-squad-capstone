@@ -34,8 +34,8 @@ h    oscillators, and other necessary settings.
 
 /* DEFINITIONS */
 
-#define SCL_PIN               BIT2 //Same pins for both ports
-#define SDA_PIN               BIT1
+#define SCL_PIN               BIT6 //Same pins for both ports
+#define SDA_PIN               BIT7
 #define PRIMARY               0 
 #define SECONDARY             1
 #define TX_MODE               1
@@ -53,16 +53,11 @@ h    oscillators, and other necessary settings.
 #define NO_MESSAGE            0 //pass to "message" parameter of i2cInitializeMessage when no message is sent (null pointer)
 #define BAUD_DIVIDE_10        10
 
-//Primary I2C (on Port 3)
-#define PRIMARY_I2C_SEL       P3SEL //This port shares lines with SD card SPI interface and runs through isolator on MB
-#define PRIMARY_I2C_DIR       P3DIR //Included for completeness
-#define PRIMARY_I2C_OUT       P3OUT //Included to use the isolator pin
-#define SD_I2C_ISOL           BIT0 //Activate/deactivate SD card isolator on MB
-
-//Secondary I2C (on Port 5)
-#define SECONDARY_I2C_SEL     P5SEL
-#define SECONDARY_I2C_DIR     P5DIR
-
+//Primary I2C (on Port 1)
+#define PRIMARY_I2C_SEL       P1SEL //This port shares lines with SD card SPI interface and runs through isolator on MB
+#define PRIMARY_I2C_SEL_2     P1SEL2
+#define PRIMARY_I2C_DIR       P1DIR //Included for completeness
+#define PRIMARY_I2C_OUT       P1OUT //Included to use the isolator pin
 
 /* MACROS */
 
@@ -80,30 +75,8 @@ h    oscillators, and other necessary settings.
 #define GET_PRIMARY_TX_READY      (IFG2 & UCB0TXIFG) //Check flags
 #define GET_PRIMARY_RX_READY      (IFG2 & UCB0RXIFG)
 #define STOP_PRIMARY_I2C          (UCB0CTL1 |= UCTXSTP) //generate stop condition
-#define SET_ISOL_PIN_OUT          (PRIMARY_I2C_DIR |= SD_I2C_ISOL) //Set pin to indicate output
-#define ENABLE_ISOL_I2C           (PRIMARY_I2C_OUT |= SD_I2C_ISOL) //Double check to make sure this activates I2C
-#define ENABLE_ISOL_SD            (PRIMARY_I2C_OUT &= ~SD_I2C_ISOL) //Do we want these macros in I2C, since it also applies to SPI?
 #define PRIMARY_GET_NACK          (UCB0STAT & UCNACKIFG)
 #define PRIMARY_GET_STT_CLR       ~(UCB0CTL1 & UCTXSTT) //gets whether start bit has cleared
-
-//Secondary I2C (on Port 5)
-#define DISABLE_SECONDARY_I2C     (UCB1CTL1 |= UCSWRST)
-#define ENABLE_SECONDARY_I2C      (UCB1CTL1 &= ~UCSWRST)
-#define SET_I2C_MODE_SECONDARY    (UCB1CTL0 |= UCMODE_3)
-#define SET_SYNC_SECONDARY        (UCB1CTL0 |= USYNC)
-#define RESET_SECONDARY_CONFIG_0  (UCB1CTL0 ^= UCB1CTL0)
-#define RESET_SECONDARY_CONFIG_1  (UCB1CTL1 ^= UCB1CTL1)
-#define GET_SECONDARY_IS_ACTIVE   ~(UCB1CTL1 & UCSWRST)
-#define START_SECONDARY_I2C       (UCB1CTL1 |= UCTXSTT)
-#define SECONDARY_TXRX_INT_EN     (UC1IE |= (UCB1TXIE + UCB1RXIE))
-#define SECONDARY_TXRX_INT_DIS    (UC1IE &= ~(UCB1TXIE + UCB1RXIE))
-#define GET_SECONDARY_TX_READY    (UC1IFG & UCB1TXIFG)
-#define GET_SECONDARY_RX_READY    (UC1IFG & UCB1RXIFG)
-#define STOP_SECONDARY_I2C        (UCB1CTL1 |= UCTXSTP)
-#define SECONDARY_GET_NACK        (UCB1STAT & UCNACKIFG)
-#define SECONDARY_GET_STT_CLR     ~(UCB1CTL1 & UCTXSTT)
-
-
 
 /* DATATYPES */
 

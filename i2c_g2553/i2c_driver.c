@@ -31,24 +31,11 @@ void i2cInit(I2CConfig* configStruct) {
     UCB0CTL0 |= (UCMST + UCMODE_3 + UCSYNC); //UCMST - master mode, UCMODE_3 - I2C mode, UCSYNC - synchronous mode
     UCB0CTL1 |= (configStruct->clockSource) << CLOCK_SRC_SHIFT; //Double check this...
     PRIMARY_I2C_SEL |= (SCL_PIN + SDA_PIN); //Set pin mode
+    PRIMARY_I2C_SEL_2 |= (SCL_PIN + SDA_PIN);
     UCB0BR0 = ((configStruct->baudDivider) & BAUD_LOW_MASK); //Low 8 bits register
     UCB0BR1 = (configStruct->baudDivider) >> BAUD_SHIFT; //High 8 bits register
 
     ENABLE_PRIMARY_I2C;
-
-  } else if (configStruct -> i2cInterface == SECONDARY) {
-
-    DISABLE_SECONDARY_I2C;
-    RESET_SECONDARY_CONFIG_0;
-    UCB1CTL1 = BIT0;
-
-    UCB1CTL0 |= (UCMST + UCMODE_3 + UCSYNC);
-    UCB1CTL1 |= (configStruct->clockSource) << CLOCK_SRC_SHIFT;
-    SECONDARY_I2C_SEL |= (SCL_PIN + SDA_PIN);
-    UCB1BR0 = ((configStruct->baudDivider) & BAUD_LOW_MASK); //Low 8 bits register
-    UCB1BR1 = (configStruct->baudDivider) >> BAUD_SHIFT; //High 8 bits register
-
-    ENABLE_SECONDARY_I2C;
 
   } else { //Invalid input
     configStruct -> error = I2CERR_UNSPECIFIED_ERR;
@@ -222,87 +209,6 @@ void i2cSendMessage(I2CMessage* messageStruct) { //errors need to be handled
     //Stop communication
     if (!stoppedFlag) { //prevents repeated stop (don't know if that would be a problem)
       STOP_PRIMARY_I2C;
-    }
-
-    messageStruct -> error = I2CERR_NO_ERROR;
-    //OSUnprotect();
-    return;
-
-  } else if (messageStruct->i2cInterface == SECONDARY) {
-    if (!GET_SECONDARY_IS_ACTIVE) { //Interface is not active
-      messageStruct -> error = I2CERR_INTERFACE_NOT_ACTIVE;
-      //OSUnprotect();
-      return; //Must be activated manually
-    }
-    
-    //Initialize
-    UCB1I2CSA = messageStruct->address; //Set address
-
-    if (messageStruct->messageLength > 0) {
-      UCB1CTL1 |= UCTR;
-      START_SECONDARY_I2C; //Set start condition
-    }
-
-    //Transmit data
-    i = 0;
-    while (i < messageStruct->messageLength) {//takes care of RX only case: if message is empty, while loop never run
-      if (!GET_SECONDARY_TX_READY) {
-        if (SECONDARY_GET_NACK) { //Send same byte again if slave transmitted a NACK
-          nackCount++;
-          if (nackCount >= MAX_NACK) { //Slave unreachable, abort to prevent stalling OS
-            STOP_SECONDARY_I2C;
-            DISABLE_SECONDARY_I2C; //Problem with the slave, so shut down interface to prevent undefined behavior (not sure what behavior, though)
-            messageStruct -> error = I2CERR_NACK_LIMIT_REACHED;
-            //OSUnprotect();
-            return;
-          }
-          START_SECONDARY_I2C; //Repeated start
-        }
-        continue;
-      } else {
-        UCB1TXBUF = messageStruct->message[i];
-        nackCount = 0; //byte got through, slave is reachable.
-        i++;
-      }
-    }
-
-    while(!GET_SECONDARY_TX_READY); //wait for final byte to finish transmission
-
-    //Receive
-    if (messageStruct->txrxMode == RX_MODE) {
-      int j = 0;
-      UCB1CTL1 &= ~UCTR; //Set to receive mode
-      START_SECONDARY_I2C; //(repeated) start condition
-      UC1IFG &= ~UCB1TXIFG; //clear TX flag (the datasheet told me so)
-
-      //special case for single byte transmission
-      if ((messageStruct->respLen == 1) && SECONDARY_GET_STT_CLR) { //Send stop cond. as soon as STT is cleared if only receiving one byte (from datasheet)
-        while(!SECONDARY_GET_STT_CLR);
-        STOP_SECONDARY_I2C; //Automatically sends final NACK as required by I2C spec.
-        stoppedFlag = 1;
-      }
-
-      while (j < messageStruct->respLen) {
-        if (!GET_SECONDARY_RX_READY) {
-          if (SECONDARY_GET_NACK) { //Didn't acknowledge address (only has possibility of happening when while loop is entered            debug_printf("NACKED ADDRESS ON REC\n");
-            START_SECONDARY_I2C; //Repeated start
-            continue;
-          }
-        } else {
-          j++;
-          if (j >= messageStruct->respLen) {
-            STOP_SECONDARY_I2C;
-            stoppedFlag = 1;
-          }
-          messageStruct->response[j] = UCB1RXBUF;
-        }
-      }
-      //All done (pretty sure...)
-    }
-
-    //Stop communication
-    if (!stoppedFlag) {
-      STOP_SECONDARY_I2C;
     }
 
     messageStruct -> error = I2CERR_NO_ERROR;

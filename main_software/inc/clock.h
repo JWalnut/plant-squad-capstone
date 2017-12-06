@@ -24,4 +24,6 @@ void InitializeClock(char divider);
 */
 void clockTick();
 
+
+int counter;
 #endif

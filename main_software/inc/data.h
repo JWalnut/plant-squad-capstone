@@ -6,13 +6,20 @@
 #define DATA_H
 
 /* CONSTANTS */
-#define X_AXIS 0
-#define Y_AXIS 1
-#define Z_AXIS 2
+#define X_AXIS_H 0
+#define X_AXIS_L 1
+#define Y_AXIS_H 2
+#define Y_AXIS_L 3
+#define Z_AXIS_H 4
+#define Z_AXIS_L 5
+
+#define IMU_DATA_RESP_LEN 6
+#define IMU_DATA_MSG_LEN 1
 
 /* VARIABLES */
-char gyroscopeBuffer[3][100]; //First dimension for three axes, use predefined "X_AXIS", etc.
-int magnetometerBuffer[3][100];
+int gyroscopeBuffer[6][100]; //First dimension for three axes, use predefined "X_AXIS", etc.
+int magnetometerBuffer[6][100];
+int bufferIndex;
 
 /* DATATYPES */
 
